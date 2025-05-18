@@ -34,6 +34,7 @@ public class UserInterface {
             System.out.println("7. Get all vehicles");
             System.out.println("8. Add vehicle");
             System.out.println("9. Remove vehicle");
+            System.out.println("10. Sell/Lease a vehicle");
             System.out.println("0. Exit");
             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             System.out.println("Please enter a number");
@@ -67,6 +68,9 @@ public class UserInterface {
                 case 9:
                     processRemoveVehicleRequest();
                     break;
+                case 10:
+                    sellOrLeaseVehicle();
+                    break;
                 case 0:
                     System.out.println("Exiting the program");
                     break;
@@ -74,6 +78,102 @@ public class UserInterface {
                     System.out.println("Command not found. Try again!");
             }
         } while (mainMenuCommand != 0);
+
+    }
+
+    private void sellOrLeaseVehicle(){
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println("Please select one of the following options:" );
+        System.out.println("1. Sell a vehicle");
+        System.out.println("2. Lease a vehicle");
+
+        int sellOrLeaseOption = scanner.nextInt();
+        scanner.nextLine();
+        if(sellOrLeaseOption==1) {
+            System.out.println("~~~~~~~~~~~~You have selected to sell~~~~~~~~~~~~~~~~");
+
+
+            System.out.println("Please enter the date as (yyyymmdd)");
+            String date = scanner.nextLine();
+
+            System.out.println("Please enter the name of the owner");
+            String name = scanner.nextLine();
+
+            System.out.println("Please enter the email of the owner");
+            String email = scanner.nextLine();
+
+
+            System.out.println("PLease enter the vin of the vehicle");
+            int vin = scanner.nextInt();
+            scanner.nextLine();
+
+            Vehicle vehicleSale = dealership.getVehicleByVin(vin);
+            if (vehicleSale == null) {
+                System.out.println("Vehicle not found. Please try again.");
+                return;
+            }
+
+            boolean isFinanced = false;
+            System.out.println("Is the vehicle financed? Enter yes or no");
+            String userFinanceInput = scanner.nextLine();
+            if(userFinanceInput.equalsIgnoreCase("yes")){
+                isFinanced=true;
+            }
+            else if (userFinanceInput.equalsIgnoreCase("no"))
+            {
+                System.out.println("The vehicle is not financed.");
+            }
+            SalesContract salesContract = new SalesContract(date,name,email,vehicleSale,isFinanced);
+            ContractFileManager.saveContract(salesContract);
+
+            System.out.println("The sales contract has been saved");
+            System.out.println("The total price is $"+String.format("%.2f",salesContract.getTotalPrice()));
+            System.out.println("Thank you for shopping with us");
+            dealership.removeVehicle(vin);
+            DealershipFileManager.saveDealership(dealership);
+
+
+        }
+        else if (sellOrLeaseOption==2){
+            System.out.println("~~~~~~~~~~~~You have selected to lease~~~~~~~~~~~~~~~~");
+
+
+            System.out.println("Please enter the date as (yyyymmdd)");
+            String date = scanner.nextLine();
+
+            System.out.println("Please enter the name of the owner");
+            String name = scanner.nextLine();
+
+            System.out.println("Please enter the email of the owner");
+            String email = scanner.nextLine();
+
+
+            System.out.println("PLease enter the vin of the vehicle");
+            int vin = scanner.nextInt();
+            scanner.nextLine();
+
+            Vehicle vehicleLease = dealership.getVehicleByVin(vin);
+            if (vehicleLease == null) {
+                System.out.println("Vehicle not found. Please try again.");
+                return;
+            }
+
+            LeaseContract leaseContract = new LeaseContract(date,name,email,vehicleLease);
+            ContractFileManager.saveContract(leaseContract);
+
+            System.out.println("The lease contract has been saved");
+            System.out.println("The total price is $"+String.format("%.2f",leaseContract.getTotalPrice()));
+            System.out.println("Thank you for shopping with us");
+            dealership.removeVehicle(vin);
+            DealershipFileManager.saveDealership(dealership);
+
+
+        }
+        else{
+            System.out.println("Please try again");
+        }
+
+
 
     }
 

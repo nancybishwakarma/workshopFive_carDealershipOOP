@@ -124,6 +124,17 @@ public class Dealership {
             }
         }
     }
+    public Vehicle getVehicleByVin(int vin){
+        for(int i = 0; i < inventory.size(); i++) {
+            if (inventory.get(i).getVin() == vin) {
+                return inventory.get(i);
+            }
+        }
+
+        System.out.println("Vehicle not found");
+         return null;
+
+    }
 
     public String getName() {
         return name;

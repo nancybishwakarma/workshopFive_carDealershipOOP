@@ -1,8 +1,7 @@
 _______________________
 # Car Dealership
 _______________________
-## This is a console based app that enables car salesperson or managers to manage and keep track of the vehicles. It also allows the users to filter the vehicles by various categories as well as add or remove vehicles of their choice.
-________________________
+## This is a updated version of the Car Dealership console application. In this version, users are allowed to sell or lease a vehicle. The program calculates all of the costs and updates the inventory and contract. ________________________
 # *Features*
 
 - Error Handling
@@ -12,50 +11,27 @@ ________________________
 - List All Vehicles
 - Add Vehicle
 - Remove Vehicle
+- Sell a Vehicle
+- Lease a Vehicle
 ___________________________________
 # *Interesting Code*
 
-        private ArrayList<Vehicle> inventory;
+     @Override
+    public double getTotalPrice() {
+        double vehiclePrice = getVehicleSold().getPrice();
+        double salesTotalPrice = vehiclePrice+getSalesTaxAmount()+getRecordingFee()+getProcessingFee();
 
-    public Dealership(String name, String address, String phone) {
-        this.name = name;
-        this.address = address;
-        this.phone = phone;
-        this.inventory = new ArrayList<>();
-
+        return salesTotalPrice;
     }
-This is the most interesting code in this program to me. Inside the constructor, we create a new, empty ArrayList and assigns it to inventory. I had never seen that being done before and it was different than our ususal initialization.
+
+This is the most interesting code in this program to me. Using one of the pillar of OOP, Abstraction, allowed us to use the same method but implement it in different ways. This helped in scalability and keep the code DRY.
 _______________________________________________
 # Screenshots
 ### Main Menu
 ![mainmenu.png](Screenshots/mainmenu.png)
-____________________________________________
 
-### Filter by Price
-![byPrice.png](Screenshots/byPrice.png)
-________________________________________________
-### Filter by Make/Model
-![byMakeModel.png](Screenshots/byMakeModel.png)
-________________________________________________
-### Filter by Year
-![byYear.png](Screenshots/byYear.png)
-__________________________________________________
-### Filter by Color
-![byColor.png](Screenshots/byColor.png)
-_________________________________________________
-### Filter by Mileage
-![byMileage.png](Screenshots/byMileage.png)
-_________________________________________________
-### Filter by Vehicle Type
-![byType.png](Screenshots/byType.png)
-_________________________________________________
-### All Vehicles
-![byAllVehicles.png](Screenshots/byAllVehicles.png)
-___________________________________________________
-### Add Vehicle
-![addVehicle.png](Screenshots/addVehicle.png)
-_____________________________________________________
-### Remove Vehicle
-![removeVehicle.png](Screenshots/removeVehicle.png)
-### Exit Program
-![exit.png](Screenshots/exit.png)
+### Sell Menu
+![sell.png](Screenshots/sell.png)
+
+### Lease Menu
+![lease.png](Screenshots/lease.png)
